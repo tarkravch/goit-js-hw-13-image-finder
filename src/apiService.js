@@ -2,55 +2,65 @@
 import imageCard from './templates/image-card.hbs';
 import './styles.css';
 
-
-const MAIN_URL = 'https://pixabay.com/api/?image_type=photo&orientation=horizontal';
-const API_KEY = '21265034-f349ebe085002257868a3d8ee';
-const options = {
-    headers: {
-        Authorization: API_KEY,
-    },
-};
-const inputForm = document.querySelector('.search-form');
-const gallery = document.querySelector('.gallery');
-
-
-
-/* import { refs } from './refs';
-import { renderInfo } from './render';
-import { noticeError } from './render';
-import renderList from './render';
-import renderCard from './render';
-import clearInputField from './render'; */
+import { refs } from './refs';
+import { renderGallery } from './renderGallery';
+import clickedImage from './modalImage';
+import showLargeImg from './modalImage';
 
 /* import '../node_modules/@pnotify/core/dist/PNotify.css';
 import '../node_modules/@pnotify/mobile/dist/PNotifyMobile.css';
 import '../node_modules/@pnotify/core/dist/BrightTheme.css'
-import '../src/styles.css';
 import { alert, error, success, defaultModules } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js'; */
 
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/mobile/dist/PNotifyMobile.css';
+import '@pnotify/core/dist/BrightTheme.css';
+import { alert, error, success, defaultModules } from '@pnotify/core/dist/PNotify.js';
+import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
 
-inputForm.addEventListener('submit', (event => {
-    const form = event.currentTarget;
-    const searchQuery = form.value;
-    console.log(searchQuery);
+const MAIN_URL = 'https://pixabay.com/api/?image_type=photo&orientation=horizontal';
+export const API_KEY = '21265034-f349ebe085002257868a3d8ee';
+export const options = {
+    headers: {
+        Authorization: API_KEY,
+    },
+};
+/* API SERVICE */
+export default class ApiService {
+    constructor() {
+        this.searchQuery = '';
+        this.pageNumber = 1;
+    }
+    fetchImages() {
+        return fetch(`${MAIN_URL}&q=${this.searchQuery}&page=${this.pageNumber}&per_page=12&key=${API_KEY}`)
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then((foundImages) => {
+                console.log(foundImages);
+                this.incrementPage();
+                return foundImages;
+            })
+    }
+    incrementPage() {
+        this.pageNumber += 1;
+    }
 
-    /* return fetchImages(searchQuery, options)
-        .then(renderInfo)
-        .catch(error => {
-            noticeError('There is an error. Please try more specific query.');
-        }) */
-    /* .finally(() => {
-        inputForm.value = '';
-    }) */
-}));
+    resetPage() {
+        this.pageNumber = 1;
+        // clickedImage.removeEventListener('click', showLargeImg);
+    }
+    clearGallery() {
+        refs.gallery.innerHTML = '';
+    }
+    get query() {
+        return this.searchQuery;
+    }
 
+    set query(newQuery) {
+        this.searchQuery = newQuery;
+    }
 
-
-
-/* export default function fetchImages(searchQuery) {
-    return fetch(`${MAIN_URL}&q=${searchQuery}`)
-        .then(response => {
-            return response.json();
-        })
-} */
+}

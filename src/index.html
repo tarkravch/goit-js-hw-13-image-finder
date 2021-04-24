@@ -7,7 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Find an image</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
+    <!-- <link href="../node_modules/@pnotify/core/dist/PNotify.css" rel="stylesheet" type="text/css" />
+    <link href="../node_modules/@pnotify/mobile/dist/PNotifyMobile.css" rel="stylesheet" type="text/css" />
+    <link href="../node_modules/@pnotify/core/dist/BrightTheme.css" rel="stylesheet" type="text/css" /> -->
+    <!--  <link href="@pnotify/core/dist/PNotify.css" rel="stylesheet" type="text/css" />
+    <link href="@pnotify/mobile/dist/PNotifyMobile.css" rel="stylesheet" type="text/css" />
+    <link href="@pnotify/core/dist/BrightTheme.css" rel="stylesheet" type="text/css" /> -->
 
 </head>
 
@@ -18,15 +23,17 @@
         <button class="search-submit" type="submit">Search</button>
     </form>
 
+    <button type="button" class="btn btn-primary button" data-action="load-more">
+        <span class="spinner-border spinner-border-sm spinner is-hidden" role="status" aria-hidden="true"></span>
+
+        <span class="label">Show more</span>
+    </button>
+
     <ul class="gallery">
         <!-- Список <li> с карточками изображений -->
     </ul>
 
-    <!--  <button type="button" class="btn btn-primary button" data-action="load-more">
-        <span class="spinner-border spinner-border-sm spinner is-hidden" role="status" aria-hidden="true"></span>
-    
-        <span class="label">Показать ещё</span>
-    </button> -->
+
 
 </body>
 
